@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: mysite
+    env: python
+    buildCommand: ""
+    startCommand: gunicorn myite.wsgi:application
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: myite.settings
