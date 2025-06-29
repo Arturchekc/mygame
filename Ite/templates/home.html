@@ -1,0 +1,53 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" href="{% static 'img/Nazar.ico' %}" type="image/x-icon">
+    <title>Escape From Naz. by free</title>
+</head>
+<body>
+    <div class="main-content-wrapper">
+        <div class="corner">
+            <div class="centered-box">
+                <h1>Play the Labyrinth With Nazar by free!</h1>
+                <p>its very good and nice game to spend your time!</p>
+                <a href="{% url 'about' %}">
+                    <button type="button">Register and Download</button>
+                </a>
+            </div>
+        <div class="big-text">
+            <p>**Labyrinth With Nazar is a thrilling game of tension, stealth, and survival. You'll need to rely on your awareness, logic, and speed to avoid being caught by Nazar - a mysterious pursuer who never stops chasing.
+
+You find yourself trapped in a dark maze where every sound, every step, could be your last. All you have is a flashlight and your wits. Can you find the exit before Nazar finds you?
+
+This game builds suspense from the very beginning and keeps you on edge with every move. There’s no shooting - just silence, footsteps in the dark, and the fight to stay alive. If you think you're ready, try to escape. But remember: Nazar is always close...**</p>
+            </div>
+        </div>
+    </div>
+    <footer>
+        {% if user.is_authenticated %}
+        <form method="post" action="{% url 'post_comment' %}">
+          {% csrf_token %}
+          <textarea name="comment" rows="3" placeholder="Write a comment..." required></textarea>
+          <br>
+          <button type="submit">Send</button>
+        </form>
+        <div class="comment-list">
+          {% for comment in comments %}
+            <p><strong>{{ comment.user.username }}</strong>: {{ comment.content }}</p>
+          {% empty %}
+            <p>No comments yet.</p>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p style="text-align:center; color: gray;">You must be logged in to post a comment.</p>
+      {% endif %}
+    </footer>
+
+</body>
+</html>

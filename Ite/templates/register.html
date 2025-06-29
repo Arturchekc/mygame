@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="{% static 'css/style2.css' %}">
+    <link rel="icon" href="{% static 'img/Nazar.ico' %}" type="image/x-icon">
+</head>
+<body>
+  <div class="main-content-wrapper">
+    <div class="centered-box">
+    <h2>Register</h2>
+    <form method="post" id="my-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Register</button>
+    </form>
+        <p>or</p>
+        <form action="{% url 'login' %}">
+            <button type="submit">Log in</button>
+        </form>
+    </div>
+    </div>
+    <footer>
+        {% if user.is_authenticated %}
+        <form method="post" action="{% url 'post_comment' %}">
+          {% csrf_token %}
+          <textarea name="comment" rows="3" placeholder="Write a comment..." required></textarea>
+          <br>
+          <button type="submit">Send</button>
+        </form>
+        <div class="comment-list">
+          {% for comment in comments %}
+            <p><strong>{{ comment.user.username }}</strong>: {{ comment.content }}</p>
+          {% empty %}
+            <p>No comments yet.</p>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p style="text-align:center; color: gray;">You must be logged in to post a comment.</p>
+      {% endif %}
+    </footer>
+</body>
+</html>
