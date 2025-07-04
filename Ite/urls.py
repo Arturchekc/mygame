@@ -1,3 +1,5 @@
+import os
+
 from django.urls import path
 from myite import settings
 from . import views
@@ -9,5 +11,8 @@ urlpatterns = [
     path('secret/', views.secret_page, name='secret'),
     path('register/', views.register, name='register'),
     path('post_comment/', views.post_comment, name='post_comment'),
-    path('sitemap.xml', serve, {'path': 'sitemap.xml', 'document_root': settings.STATIC_ROOT}),
+    path('sitemap.xml', serve, {
+        'path': 'sitemap.xml',
+        'document_root': os.path.join(settings.BASE_DIR, 'static')
+    }),
 ]
