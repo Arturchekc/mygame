@@ -1,8 +1,13 @@
+import os
+
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
+
+from myite import settings
 from .models import Comment
 
 def index(request):
@@ -41,3 +46,13 @@ def post_comment(request):
     if content:
         Comment.objects.create(user=request.user, content=content)
     return redirect(request.META.get('HTTP_REFERER', '/'))
+
+def sitemap(request):
+    filepath = os.path.join(settings.BASE_DIR, 'Ite', 'static', 'sitemap.xml')
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            xml_content = f.read()
+    except FileNotFoundError:
+        return HttpResponse("File not found", status=404)
+
+    return HttpResponse(xml_content, content_type='application/xml')

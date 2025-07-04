@@ -11,8 +11,5 @@ urlpatterns = [
     path('secret/', views.secret_page, name='secret'),
     path('register/', views.register, name='register'),
     path('post_comment/', views.post_comment, name='post_comment'),
-    path('sitemap.xml', serve, {
-        'path': 'sitemap.xml',
-        'document_root': os.path.join(settings.BASE_DIR, 'static')
-    }),
+    path('sitemap.xml', views.sitemap),
 ]
