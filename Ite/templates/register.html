@@ -23,23 +23,18 @@
     </div>
     </div>
     <footer>
-        {% if user.is_authenticated %}
-        <form method="post" action="{% url 'post_comment' %}">
-          {% csrf_token %}
-          <textarea name="comment" rows="3" placeholder="Write a comment..." required></textarea>
-          <br>
-          <button type="submit">Send</button>
-        </form>
         <div class="comment-list">
           {% for comment in comments %}
-            <p><strong>{{ comment.user.username }}</strong>: {{ comment.content }}</p>
+            <p>
+              <strong>{{ comment.user.username }}</strong>: {{ comment.content }}
+              {% if user.is_staff %}
+                <a href="{% url 'delete_comment' comment.id %}" onclick="return confirm('Удалить этот комментарий?');" style="color: red; margin-left: 10px;">[Удалить]</a>
+              {% endif %}
+            </p>
           {% empty %}
             <p>No comments yet.</p>
           {% endfor %}
         </div>
-      {% else %}
-        <p style="text-align:center; color: gray;">You must be logged in to post a comment.</p>
-      {% endif %}
 
         © 2025 Arur | Contact: buartur12@gmail.com
     </footer>

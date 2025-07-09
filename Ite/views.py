@@ -1,9 +1,10 @@
 import os
 
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 
@@ -56,3 +57,9 @@ def sitemap(request):
         return HttpResponse("File not found", status=404)
 
     return HttpResponse(xml_content, content_type='application/xml')
+
+@staff_member_required
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    comment.delete()
+    return redirect(request.META.get('HTTP_REFERER', '/'))
