@@ -13,4 +13,5 @@ urlpatterns = [
     path('post_comment/', views.post_comment, name='post_comment'),
     path('sitemap.xml', views.sitemap),
     path("robots.txt", TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
+    path('delete_comment/<int:comment_id>/', views.delete_comment, name='delete_comment'),
 ]

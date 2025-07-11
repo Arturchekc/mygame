@@ -22,16 +22,26 @@
         </a>
     </div>
     <footer>
-        {% if user.is_authenticated %}
+      {% if user.is_authenticated %}
         <form method="post" action="{% url 'post_comment' %}">
           {% csrf_token %}
-          <textarea name="comment" rows="3" placeholder="Write a comment..." required></textarea>
-          <br>
+          <textarea name="comment" rows="3" placeholder="Write a comment..." required></textarea><br>
           <button type="submit">Send</button>
         </form>
+
         <div class="comment-list">
           {% for comment in comments %}
-            <p><strong>{{ comment.user.username }}</strong>: {{ comment.content }}</p>
+            <div style="margin-bottom: 10px;">
+              <p><strong>{{ comment.user.username }}</strong>: {{ comment.content }}</p>
+              {% if comment.user == request.user %}
+                <form action="{% url 'delete_comment' comment.id %}" method="post" style="display:inline;">
+                  {% csrf_token %}
+                  <button type="submit" style="color:red; background:none; border:none; cursor:pointer;">
+                    (Delete)
+                  </button>
+                </form>
+              {% endif %}
+            </div>
           {% empty %}
             <p>No comments yet.</p>
           {% endfor %}
@@ -39,9 +49,7 @@
       {% else %}
         <p style="text-align:center; color: gray;">You must be logged in to post a comment.</p>
       {% endif %}
-
-
-        © 2025 Arur | Contact: buartur12@gmail.com
+      © 2025 Arur | Contact: buartur12@gmail.com
     </footer>
 </body>
 </html>
