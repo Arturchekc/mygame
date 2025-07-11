@@ -106,3 +106,22 @@ textarea {
     background: #2c2c2c;
     border-radius: 4px;
 }
+
+#my-form label,
+#my-form input,
+#my-form textarea,
+#my-form select {
+  color: white;
+}
+
+#my-form input,
+#my-form textarea,
+#my-form select {
+  background-color: #222;
+  border: 1px solid #444;
+}
+
+#my-form input::placeholder,
+#my-form textarea::placeholder {
+  color: #aaa;
+}
